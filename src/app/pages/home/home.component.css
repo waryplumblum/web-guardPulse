@@ -1,0 +1,33 @@
+/* Animación de fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Transición de borde para los botones */
+.btn-auditoria:hover, .btn-hover:hover {
+  box-shadow: 0 0 10px rgba(219, 122, 68, 0.8), 0 0 15px rgba(219, 122, 68, 0.8);
+}
+
+/* Alineación de testimonios */
+.grid {
+  display: grid;
+  justify-items: center;
+}
+
+/* Ajuste de columnas para pantallas medianas y grandes */
+@media (min-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Dos columnas en pantallas medianas */
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Dos columnas también en pantallas grandes */
+  }
+}
