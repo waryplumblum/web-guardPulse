@@ -22,11 +22,4 @@ export class AuditsService {
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message || 'Error en la solicitud'));
   }
-
-  getAudits(): Observable<AuditInterface[]> {
-    return this.http.get<AuditInterface[]>(this.apiUrl).pipe(
-      catchError(this.handleError)
-    );
-  }
-
 }
