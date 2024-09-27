@@ -1,16 +1,27 @@
 <div class="min-h-screen bg-gray-100">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-gray-900">Resultados de la Auditoría</h2>
-    <p class="mt-4 text-gray-600">Aquí están los resultados de tu auditoría.</p>
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-xl font-bold text-gray-900">SEO</h3>
-        <p class="mt-2 text-gray-600">Tu puntuación de SEO es 85/100</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-xl font-bold text-gray-900">Accesibilidad</h3>
-        <p class="mt-2 text-gray-600">Tu puntuación de accesibilidad es 90/100</p>
-      </div>
-    </div>
+    <h2 class="text-3xl font-bold text-gray-900">Historial de Auditorías</h2>
+    <p class="mt-4 text-gray-600">Aquí puedes ver todas tus auditorías anteriores.</p>
+
+    <table class="min-w-full bg-white mt-6 rounded-lg shadow-md">
+      <thead>
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">URL</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">SEO</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Accesibilidad</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rendimiento</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let audit of audits()">
+          <td class="px-6 py-4 whitespace-nowrap">{{ audit.url }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ audit.seo }}/100</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ audit.accessibility }}/100</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ audit.performance }}/100</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ audit.createdAt | date:'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
