@@ -1,1 +1,6 @@
-<p>audit-results works!</p>
+<div *ngIf="auditResult">
+  <h3 class="text-xl font-bold text-gray-900">Resultados de la Auditoría</h3>
+  <p class="mt-2 text-gray-600">SEO: {{ auditResult.seo }}/100</p>
+  <p class="mt-2 text-gray-600">Accesibilidad: {{ auditResult.accessibility }}/100</p>
+  <p class="mt-2 text-gray-600">Rendimiento: {{ auditResult.performance }}/100</p>
+</div>
