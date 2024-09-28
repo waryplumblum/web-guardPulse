@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuditInterface } from '../interfaces/audit.interface';
+import { AuditInterface, AuditResultDetails,AuditApiResponse } from '../interfaces/audit.interface';
 
 
 @Injectable({
@@ -13,8 +13,8 @@ export class AuditsService {
 
   constructor(private http: HttpClient) {}
 
-  auditUrl(url: string): Observable<AuditInterface> {
-    return this.http.post<AuditInterface>(this.apiUrl, { url }).pipe(
+  auditUrl(url: string): Observable<AuditApiResponse> {
+    return this.http.post<AuditApiResponse>(this.apiUrl, { url }).pipe(
       catchError(this.handleError)
     );
   }

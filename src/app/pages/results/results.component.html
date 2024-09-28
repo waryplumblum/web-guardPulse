@@ -9,7 +9,7 @@
     <!-- Indicador de carga -->
     <div *ngIf="isLoading()" class="text-gray-600">Realizando auditoría, por favor espera...</div>
 
-<!-- Resultados de la auditoría -->
-<app-audit-results *ngIf="!isLoading() && auditResult().seo !== undefined" [auditResult]="auditResult()"></app-audit-results>
+    <!-- Resultados de la auditoría -->
+    <app-audit-results *ngIf="auditCompleted()" [auditResult]="auditResult()"></app-audit-results>
   </div>
 </div>
