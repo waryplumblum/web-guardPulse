@@ -1,13 +1,20 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold text-gray-900">Auditoría Web</h2>
-    <p class="mt-4 text-gray-600">Ingresa la URL de tu sitio para comenzar.</p>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-500 to-blue-700 py-8">
+  <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-2xl">
+    <h2 class="text-3xl font-bold text-gray-900 text-center mb-6">Auditoría Web</h2>
+    <p class="text-lg text-gray-600 text-center mb-4">Ingresa la URL de tu sitio para comenzar.</p>
 
     <!-- Formulario para la URL -->
-    <app-url-form (submitUrl)="onUrlSubmit($event)"></app-url-form>
+    <div class="mb-6">
+      <app-url-form (submitUrl)="onUrlSubmit($event)"></app-url-form>
+    </div>
 
     <!-- Indicador de carga -->
-    <div *ngIf="isLoading()" class="text-gray-600">Realizando auditoría, por favor espera...</div>
+    <div *ngIf="isLoading()" class="text-gray-600 text-center mb-6">
+      <div class="flex justify-center items-center space-x-2">
+        <div class="w-5 h-5 border-4 border-blue-400 border-t-transparent border-solid rounded-full animate-spin"></div>
+        <span>Realizando auditoría, por favor espera...</span>
+      </div>
+    </div>
 
     <!-- Resultados de la auditoría -->
     <app-audit-results *ngIf="auditCompleted()" [auditResult]="auditResult()"></app-audit-results>

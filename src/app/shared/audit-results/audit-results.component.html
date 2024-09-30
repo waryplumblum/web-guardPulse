@@ -1,7 +1,98 @@
-<div *ngIf="auditResult">
-  <h3 class="text-xl font-bold text-gray-900">Resultados de la Auditoría</h3>
-  <p class="mt-2 text-gray-600">SEO: {{ auditResult.seo }}/100</p>
-  <p class="mt-2 text-gray-600">Accesibilidad: {{ auditResult.accessibility }}/100</p>
-  <p class="mt-2 text-gray-600">Rendimiento: {{ auditResult.performance }}/100</p>
-  <!-- <pre>{{ auditResult | json }}</pre> Muestra los detalles del reporte -->
+<div *ngIf="auditResult" class="mt-6">
+  <h3 class="text-xl font-bold text-gray-900 mb-4">Resultados de la Auditoría</h3>
+
+  <!-- Puntajes generales -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+    <div class="bg-green-100 p-4 rounded-lg shadow">
+      <p class="text-lg font-semibold text-gray-800">SEO</p>
+      <p class="text-3xl font-bold text-green-600">{{ auditResult.seo }}/100</p>
+      <p *ngIf="auditResult.seo < 100" class="text-sm text-gray-600">Mejorar la optimización de meta etiquetas y enlaces internos.</p>
+    </div>
+    <div class="bg-yellow-100 p-4 rounded-lg shadow">
+      <p class="text-lg font-semibold text-gray-800">Accesibilidad</p>
+      <p class="text-3xl font-bold text-yellow-600">{{ auditResult.accessibility }}/100</p>
+      <p *ngIf="auditResult.accessibility < 100" class="text-sm text-gray-600">Asegúrate de que todas las imágenes tengan texto alternativo y verifica el contraste de color.</p>
+    </div>
+    <div class="bg-red-100 p-4 rounded-lg shadow">
+      <p class="text-lg font-semibold text-gray-800">Rendimiento</p>
+      <p class="text-3xl font-bold text-red-600">{{ auditResult.performance }}/100</p>
+      <p *ngIf="auditResult.performance < 100" class="text-sm text-gray-600">Optimiza el tiempo de carga de los recursos y mejora el tiempo de respuesta del servidor.</p>
+    </div>
+  </div>
+
+  <!-- Detalles adicionales de rendimiento -->
+  <div class="mt-8">
+    <h4 class="text-lg font-semibold mb-4">Detalles de Rendimiento</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">First Contentful Paint (FCP)</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['first-contentful-paint'].score }} ms</p>
+        <p *ngIf="auditResult.reportDetails['first-contentful-paint'].score > 1000" class="text-sm text-gray-600">Considera optimizar la carga de contenido inicial.</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Largest Contentful Paint (LCP)</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['largest-contentful-paint'].score }} ms</p>
+        <p *ngIf="auditResult.reportDetails['largest-contentful-paint'].score > 2500" class="text-sm text-gray-600">Optimiza el tiempo de carga del elemento más grande visible.</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Speed Index</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['speed-index'].score }} ms</p>
+        <p *ngIf="auditResult.reportDetails['speed-index'].score > 1000" class="text-sm text-gray-600">Reduce el tiempo de renderizado visual.</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Tiempo de Respuesta del Servidor</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['server-response-time'].score }} ms</p>
+        <p *ngIf="auditResult.reportDetails['server-response-time'].score > 200" class="text-sm text-gray-600">Considera mejorar la infraestructura del servidor.</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Tiempo Total de Bloqueo</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['total-blocking-time'].score }} ms</p>
+        <p *ngIf="auditResult.reportDetails['total-blocking-time'].score > 300" class="text-sm text-gray-600">Optimiza las tareas de bloqueos largos en el hilo principal.</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Cumulative Layout Shift (CLS)</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['cumulative-layout-shift'].score }}</p>
+        <p *ngIf="auditResult.reportDetails['cumulative-layout-shift'].score > 0.1" class="text-sm text-gray-600">Minimiza los cambios de diseño inesperados durante la carga de la página.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detalles de SEO -->
+  <div class="mt-8">
+    <h4 class="text-lg font-semibold mb-4">Detalles de SEO</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Título del Documento</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['document-title'] }}</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Descripción Meta</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['meta-description'] }}</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Estado del Robots.txt</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['robots-txt'] }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detalles de Accesibilidad -->
+  <div class="mt-8">
+    <h4 class="text-lg font-semibold mb-4">Detalles de Accesibilidad</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Contraste de Color</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['color-contrast'] }}</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Texto Alternativo en Imágenes</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['image-alt'] }}</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-sm text-gray-600">Orden de Encabezados</p>
+        <p class="text-lg font-semibold">{{ auditResult.reportDetails['heading-order'] }}</p>
+      </div>
+    </div>
+  </div>
+
 </div>
