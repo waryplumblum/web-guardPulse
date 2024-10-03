@@ -13,6 +13,56 @@
     </div>
   </div>
 
+<!-- Detalles generales -->
+<div *ngIf="categories.generalSettings">
+  <h4 class="text-lg font-semibold mb-4">Detalles Generales</h4>
+  <div *ngFor="let subcategory of categories.generalSettings | keyvalue">
+    <h5 class="font-semibold">{{ subcategory.key | titlecase }}</h5>
+    <ul>
+      <li *ngFor="let metric of subcategory.value">{{ metric | titlecase }}</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Detalles de rendimiento -->
+<div *ngIf="categories.performance" class="mt-8">
+  <h4 class="text-lg font-semibold mb-4">Detalles de Rendimiento</h4>
+  <div *ngFor="let subcategory of categories.performance | keyvalue" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h5 class="font-semibold">{{ subcategory.key | titlecase }}</h5>
+      <ul>
+        <li *ngFor="let metric of subcategory.value">{{ metric | titlecase }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Detalles de SEO -->
+<div *ngIf="categories.seo" class="mt-8">
+  <h4 class="text-lg font-semibold mb-4">Detalles de SEO</h4>
+  <div *ngFor="let subcategory of categories.seo | keyvalue" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h5 class="font-semibold">{{ subcategory.key | titlecase }}</h5>
+      <ul>
+        <li *ngFor="let metric of subcategory.value">{{ metric | titlecase }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Detalles de accesibilidad -->
+<div *ngIf="categories.accessibility" class="mt-8">
+  <h4 class="text-lg font-semibold mb-4">Detalles de Accesibilidad</h4>
+  <div *ngFor="let subcategory of categories.accessibility | keyvalue" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h5 class="font-semibold">{{ subcategory.key | titlecase }}</h5>
+      <ul>
+        <li *ngFor="let metric of subcategory.value">{{ metric | titlecase }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 
 
   <!-- Detalles adicionales de rendimiento -->
