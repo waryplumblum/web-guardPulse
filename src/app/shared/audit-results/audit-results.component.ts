@@ -62,6 +62,8 @@ export class AuditResultComponent implements OnChanges {
     if (!auditResult || !auditResult.reportDetails) return [];
 
     const reportDetails = auditResult.reportDetails;
+    console.log("Report Details reportDetailCategories:", reportDetails);  // Verifica los datos
+
 
     return [
       {
@@ -105,5 +107,25 @@ export class AuditResultComponent implements OnChanges {
       this.auditResultSignal.set(this.auditResult);
     }
   }
+
+  // Método auxiliar para obtener las claves de un objeto
+  objectKeys(obj: any): string[] {
+    return obj ? Object.keys(obj) : [];
+  }
+
+  // Método auxiliar para verificar si 'value' es un objeto
+  isObject(value: any): boolean {
+    return value && typeof value === 'object' && !Array.isArray(value);
+  }
+
+  // Formatear el valor de manera dinámica
+  formatValue(value: any): string {
+    if (this.isObject(value)) {
+      // Puedes ajustar este mensaje o mostrar los detalles directamente
+      return '[Detalles anidados]';
+    }
+    return value;
+  }
+
 
 }
