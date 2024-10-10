@@ -118,10 +118,10 @@ export class AuditResultComponent implements OnChanges {
     return value && typeof value === 'object' && !Array.isArray(value);
   }
 
-  // Formatear el valor de manera dinámica
+  // Método para formatear los valores de manera dinámica y manejar la recursividad
   formatValue(value: any): string {
     if (this.isObject(value)) {
-      // Puedes ajustar este mensaje o mostrar los detalles directamente
+      // Devolver un string que indique que es un objeto anidado o mostrar detalles si es necesario
       return '[Detalles anidados]';
     }
     return value;

@@ -56,8 +56,17 @@
                 <strong>{{ key }}:</strong>
                 <!-- Mostrar detalles anidados si es un objeto -->
                 <span *ngIf="isObject(subcategory.details[key]); else simpleValue">
-                  <div *ngFor="let subKey of objectKeys(subcategory.details[key])">
-                    <strong>{{ subKey }}:</strong> {{ subcategory.details[key][subKey] }}
+                  <div *ngFor="let subKey of objectKeys(subcategory.details[key])" class="ml-4">
+                    <strong>{{ subKey }}:</strong>
+                    <!-- Si el valor anidado es un objeto, mostrar sus claves y valores -->
+                    <span *ngIf="isObject(subcategory.details[key][subKey]); else nestedSimpleValue">
+                      <div *ngFor="let nestedKey of objectKeys(subcategory.details[key][subKey])" class="ml-4">
+                        <strong>{{ nestedKey }}:</strong> {{ subcategory.details[key][subKey][nestedKey] }}
+                      </div>
+                    </span>
+                    <ng-template #nestedSimpleValue>
+                      {{ subcategory.details[key][subKey] }}
+                    </ng-template>
                   </div>
                 </span>
                 <!-- Mostrar valor simple -->
