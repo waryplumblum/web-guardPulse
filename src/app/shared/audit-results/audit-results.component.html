@@ -1,19 +1,18 @@
 <div *ngIf="auditResult" class="mt-6">
-  <h3 class="text-xl font-bold text-gray-900 mb-4">Resultados de la Auditoría</h3>
+  <h3 class="text-2xl font-bold text-gray-900 mb-4">Resultados de la Auditoría</h3>
 
   <!-- Puntajes generales -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
     <div *ngFor="let metric of metrics()"
-      [ngClass]="[metric.bgClass, 'p-4', 'rounded-lg', 'shadow', 'animate-fade-in']">
-      <p class="text-lg font-semibold text-gray-800">{{ metric.label }}</p>
-      <p [ngClass]="metric.textColorClass" class="text-3xl font-bold">{{ metric.score }}/100</p>
+      [ngClass]="[metric.bgClass, 'p-6', 'rounded-lg', 'shadow-lg', 'transition-all', 'hover:scale-105']">
+      <p class="text-xl font-semibold text-gray-800">{{ metric.label }}</p>
+      <p [ngClass]="metric.textColorClass" class="text-4xl font-bold">{{ metric.score }}/100</p>
 
       <!-- Mensajes dinámicos según el puntaje -->
       <p *ngIf="metric.score === 100" class="text-sm text-gray-600">{{ metric.positiveMessage }}</p>
       <p *ngIf="metric.score < 100" class="text-sm text-gray-600">{{ metric.negativeMessage }}</p>
     </div>
   </div>
-
   <!-- Detalles colapsables de las subcategorías de reportDetails -->
   <div class="mt-6">
     <h3 class="text-xl font-bold text-gray-900 mb-4">Detalles del Reporte</h3>
@@ -30,37 +29,33 @@
 
       <!-- Contenido colapsable -->
       <div *ngIf="category.expanded" class="mt-2">
-        <div *ngFor="let subcategory of category.subcategories" class="mt-2 bg-white p-4 rounded-lg shadow">
+        <div *ngFor="let subcategory of category.subcategories" class="subcategory-container animate-fade-in">
 
           <!-- Si la subcategoría es 'viewport', mostrar propiedades específicas -->
           <ng-container *ngIf="subcategory.label === 'viewport'; else genericDetails">
-            <h5 class="text-md font-medium text-gray-600">{{ subcategory.label }}</h5>
-            <div class="ml-4">
-              <p class="text-sm text-gray-500"><strong>ID:</strong> {{ subcategory.details?.id }}</p>
-              <p class="text-sm text-gray-500"><strong>Title:</strong> {{ subcategory.details?.title }}</p>
-              <p class="text-sm text-gray-500"><strong>Description:</strong> {{ subcategory.details?.description }}</p>
-              <p class="text-sm text-gray-500"><strong>Score:</strong>
-                {{ subcategory.details?.score || 'N/A' }} (Mode: {{ subcategory.details?.scoreDisplayMode }})
-              </p>
-              <p class="text-sm text-gray-500"><strong>Viewport Content:</strong> {{ subcategory.details?.details?.viewportContent }}</p>
-              <p class="text-sm text-gray-500"><strong>Metric Savings INP:</strong> {{ subcategory.details?.metricSavings?.INP }}</p>
-              <p class="text-sm text-gray-500"><strong>Guidance Level:</strong> {{ subcategory.details?.guidanceLevel }}</p>
+            <h5 class="subcategory-title">{{ subcategory.label }}</h5>
+            <div class="subcategory-details">
+              <p><strong>ID:</strong> {{ subcategory.details?.id }}</p>
+              <p><strong>Title:</strong> {{ subcategory.details?.title }}</p>
+              <p><strong>Description:</strong> {{ subcategory.details?.description }}</p>
+              <p><strong>Score:</strong> {{ subcategory.details?.score || 'N/A' }} (Mode: {{ subcategory.details?.scoreDisplayMode }})</p>
+              <p><strong>Viewport Content:</strong> {{ subcategory.details?.details?.viewportContent }}</p>
+              <p><strong>Metric Savings INP:</strong> {{ subcategory.details?.metricSavings?.INP }}</p>
+              <p><strong>Guidance Level:</strong> {{ subcategory.details?.guidanceLevel }}</p>
             </div>
           </ng-container>
 
           <!-- Si no es 'viewport', mostrar detalles genéricos -->
           <ng-template #genericDetails>
-            <h5 class="text-md font-medium text-gray-600">{{ subcategory.label }}</h5>
-            <div *ngFor="let key of objectKeys(subcategory.details)">
-              <p class="text-sm text-gray-500">
+            <h5 class="subcategory-title">{{ subcategory.label }}</h5>
+            <div *ngFor="let key of objectKeys(subcategory.details)" class="subcategory-details">
+              <p>
                 <strong>{{ key }}:</strong>
-                <!-- Mostrar detalles anidados si es un objeto -->
                 <span *ngIf="isObject(subcategory.details[key]); else simpleValue">
-                  <div *ngFor="let subKey of objectKeys(subcategory.details[key])" class="ml-4">
+                  <div *ngFor="let subKey of objectKeys(subcategory.details[key])" class="nested-details">
                     <strong>{{ subKey }}:</strong>
-                    <!-- Si el valor anidado es un objeto, mostrar sus claves y valores -->
                     <span *ngIf="isObject(subcategory.details[key][subKey]); else nestedSimpleValue">
-                      <div *ngFor="let nestedKey of objectKeys(subcategory.details[key][subKey])" class="ml-4">
+                      <div *ngFor="let nestedKey of objectKeys(subcategory.details[key][subKey])" class="nested-details">
                         <strong>{{ nestedKey }}:</strong> {{ subcategory.details[key][subKey][nestedKey] }}
                       </div>
                     </span>
@@ -69,16 +64,15 @@
                     </ng-template>
                   </div>
                 </span>
-                <!-- Mostrar valor simple -->
                 <ng-template #simpleValue>
                   {{ subcategory.details[key] }}
                 </ng-template>
               </p>
             </div>
           </ng-template>
-
         </div>
       </div>
+
     </div>
   </div>
 </div>

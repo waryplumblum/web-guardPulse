@@ -35,3 +35,80 @@
 .text-red-600 {
   color: #dc2626;
 }
+
+/* Animación de desvanecimiento */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Estilo para las subcategorías */
+.subcategory-container {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.subcategory-container:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título de las subcategorías */
+.subcategory-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+/* Estilo para los campos de detalles */
+.subcategory-details {
+  margin-left: 16px;
+  margin-top: 8px;
+}
+
+.subcategory-details p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.subcategory-details strong {
+  color: #111827;
+}
+
+/* Estilo para objetos anidados */
+.nested-details {
+  margin-left: 16px;
+  border-left: 2px solid #d1d5db;
+  padding-left: 8px;
+}
+
+/* Personalización de colores */
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.bg-gray-50 {
+  background-color: #f9fafb;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
