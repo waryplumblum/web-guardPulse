@@ -3,21 +3,22 @@
 
   <!-- Puntajes generales -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-    <div *ngFor="let metric of metrics()"
+    <div *ngFor="let metric of metrics(); trackBy: trackByLabel"
       [ngClass]="[metric.bgClass, 'p-6', 'rounded-lg', 'shadow-lg', 'transition-all', 'hover:scale-105']">
       <p class="text-xl font-semibold text-gray-800">{{ metric.label }}</p>
       <p [ngClass]="metric.textColorClass" class="text-4xl font-bold">{{ metric.score }}/100</p>
 
       <!-- Mensajes dinámicos según el puntaje -->
-      <p *ngIf="metric.score === 100" class="text-sm text-gray-600">{{ metric.positiveMessage }}</p>
-      <p *ngIf="metric.score < 100" class="text-sm text-gray-600">{{ metric.negativeMessage }}</p>
+      <p class="text-sm text-gray-600">
+        {{ metric.score === 100 ? metric.positiveMessage : metric.negativeMessage }}
+      </p>
     </div>
   </div>
   <!-- Detalles colapsables de las subcategorías de reportDetails -->
   <div class="mt-6">
     <h3 class="text-xl font-bold text-gray-900 mb-4">Detalles del Reporte</h3>
 
-    <div *ngFor="let category of reportDetailCategories()" class="mb-4">
+    <div *ngFor="let category of reportDetailCategories(); trackBy: trackByLabel" class="mb-4">
       <!-- Título de cada categoría con flecha -->
       <div (click)="category.expanded = !category.expanded"
         class="flex justify-between items-center cursor-pointer bg-gray-100 p-4 rounded-lg shadow">
@@ -29,7 +30,7 @@
 
       <!-- Contenido colapsable -->
       <div *ngIf="category.expanded" class="mt-2">
-        <div *ngFor="let subcategory of category.subcategories" class="subcategory-container animate-fade-in">
+        <div *ngFor="let subcategory of category.subcategories; trackBy: trackByLabel" class="subcategory-container animate-fade-in">
 
           <!-- Si la subcategoría es 'viewport', mostrar propiedades específicas -->
           <ng-container *ngIf="subcategory.label === 'viewport'; else genericDetails">

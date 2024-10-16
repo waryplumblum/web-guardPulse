@@ -15,41 +15,39 @@ export class AuditResultComponent implements OnChanges {
   @Input() auditResult: AuditResultDetails | null = null;
   auditResultSignal = signal<AuditResultDetails | null>(null);
 
+    // Función para obtener las clases de color según el puntaje
+    getColorClasses(score: number) {
+      return {
+        bgClass: score === 100 ? 'bg-green-100' : score >= 70 ? 'bg-orange-100' : 'bg-red-100',
+        textColorClass: score === 100 ? 'text-green-600' : score >= 70 ? 'text-orange-600' : 'text-red-600'
+      };
+    }
+
   // Computed Signal para construir dinámicamente las métricas basadas en el 'auditResult'
   metrics = computed(() => {
     if (!this.auditResultSignal()) return [];
 
     const auditResult = this.auditResultSignal()!;
 
-    const getColorClasses = (score: number) => {
-      if (score === 100) {
-        return { bgClass: 'bg-green-100', textColorClass: 'text-green-600' };
-      } else if (score >= 70) {
-        return { bgClass: 'bg-orange-100', textColorClass: 'text-orange-600' };
-      } else {
-        return { bgClass: 'bg-red-100', textColorClass: 'text-red-600' };
-      }
-    };
-
     return [
       {
         label: 'SEO',
         score: auditResult.seo,
-        ...getColorClasses(auditResult.seo),
+        ...this.getColorClasses(auditResult.seo),
         positiveMessage: '¡Excelente! Tu sitio web está totalmente optimizado para SEO.',
         negativeMessage: 'Mejorar la optimización de meta etiquetas y enlaces internos.'
       },
       {
         label: 'Accesibilidad',
         score: auditResult.accessibility,
-        ...getColorClasses(auditResult.accessibility),
+        ...this.getColorClasses(auditResult.accessibility),
         positiveMessage: '¡Perfecto! Tu sitio cumple con todas las buenas prácticas de accesibilidad.',
         negativeMessage: 'Asegúrate de que todas las imágenes tengan texto alternativo y verifica el contraste de color.'
       },
       {
         label: 'Rendimiento',
         score: auditResult.performance,
-        ...getColorClasses(auditResult.accessibility),
+        ...this.getColorClasses(auditResult.accessibility),
         positiveMessage: 'Tu sitio web tiene un rendimiento óptimo.',
         negativeMessage: 'Optimiza el tiempo de carga de los recursos y mejora el tiempo de respuesta del servidor.'
       }
@@ -70,7 +68,7 @@ export class AuditResultComponent implements OnChanges {
         name: 'General Settings',
         expanded: false,
         subcategories: Object.keys(reportDetails.generalSettings).map(key => ({
-          label: key,
+          label: key || 'Sin etiqueta',  // Fallback si no hay una etiqueta,
           details: reportDetails.generalSettings[key]
         }))
       },
@@ -78,7 +76,7 @@ export class AuditResultComponent implements OnChanges {
         name: 'Performance',
         expanded: false,
         subcategories: Object.keys(reportDetails.performance).map(key => ({
-          label: key,
+          label: key || 'Sin etiqueta',  // Fallback si no hay una etiqueta,
           details: reportDetails.performance[key]
         }))
       },
@@ -86,7 +84,7 @@ export class AuditResultComponent implements OnChanges {
         name: 'Accessibility',
         expanded: false,
         subcategories: Object.keys(reportDetails.accessibility).map(key => ({
-          label: key,
+          label: key || 'Sin etiqueta',  // Fallback si no hay una etiqueta,
           details: reportDetails.accessibility[key]
         }))
       },
@@ -94,7 +92,7 @@ export class AuditResultComponent implements OnChanges {
         name: 'SEO',
         expanded: false,
         subcategories: Object.keys(reportDetails.seo).map(key => ({
-          label: key,
+          label: key || 'Sin etiqueta',  // Fallback si no hay una etiqueta,
           details: reportDetails.seo[key]
         }))
       }
@@ -126,6 +124,11 @@ export class AuditResultComponent implements OnChanges {
     }
     return value;
   }
+
+  trackByLabel(index: number, metric: any): string {
+    return metric.label;
+  }
+
 
 
 }
