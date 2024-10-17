@@ -14,6 +14,7 @@
       </p>
     </div>
   </div>
+
   <!-- Detalles colapsables de las subcategorías de reportDetails -->
   <div class="mt-6">
     <h3 class="text-xl font-bold text-gray-900 mb-4">Detalles del Reporte</h3>
@@ -34,16 +35,7 @@
 
           <!-- Si la subcategoría es 'viewport', mostrar propiedades específicas -->
           <ng-container *ngIf="subcategory.label === 'viewport'; else genericDetails">
-            <h5 class="subcategory-title">{{ subcategory.label }}</h5>
-            <div class="subcategory-details">
-              <p><strong>ID:</strong> {{ subcategory.details?.id }}</p>
-              <p><strong>Title:</strong> {{ subcategory.details?.title }}</p>
-              <p><strong>Description:</strong> {{ subcategory.details?.description }}</p>
-              <p><strong>Score:</strong> {{ subcategory.details?.score || 'N/A' }} (Mode: {{ subcategory.details?.scoreDisplayMode }})</p>
-              <p><strong>Viewport Content:</strong> {{ subcategory.details?.details?.viewportContent }}</p>
-              <p><strong>Metric Savings INP:</strong> {{ subcategory.details?.metricSavings?.INP }}</p>
-              <p><strong>Guidance Level:</strong> {{ subcategory.details?.guidanceLevel }}</p>
-            </div>
+
           </ng-container>
 
           <!-- Si no es 'viewport', mostrar detalles genéricos -->
