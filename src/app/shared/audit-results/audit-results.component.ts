@@ -15,13 +15,12 @@ export class AuditResultComponent implements OnChanges {
   @Input() auditResult: AuditResultDetails | null = null;
   auditResultSignal = signal<AuditResultDetails | null>(null);
 
-    // Función para obtener las clases de color según el puntaje
-    getColorClasses(score: number) {
-      return {
-        bgClass: score === 100 ? 'bg-green-100' : score >= 70 ? 'bg-orange-100' : 'bg-red-100',
-        textColorClass: score === 100 ? 'text-green-600' : score >= 70 ? 'text-orange-600' : 'text-red-600'
-      };
-    }
+  // Método para obtener las clases de colores basado en el puntaje
+  getColorClasses(score: number) {
+    if (score === 100) return { bgClass: 'bg-green-100', textColorClass: 'text-green-600' };
+    if (score >= 70) return { bgClass: 'bg-orange-100', textColorClass: 'text-orange-600' };
+    return { bgClass: 'bg-red-100', textColorClass: 'text-red-600' };
+  }
 
   // Computed Signal para construir dinámicamente las métricas basadas en el 'auditResult'
   metrics = computed(() => {
@@ -126,7 +125,7 @@ export class AuditResultComponent implements OnChanges {
   }
 
   trackByLabel(index: number, metric: any): string {
-    return metric.label;
+    return metric.label || index;
   }
 
 
